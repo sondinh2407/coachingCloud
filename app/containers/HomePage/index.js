@@ -9,22 +9,62 @@
  * the linting exception.
  */
 
-import React from 'react'
-import {Button, Icon} from 'react-materialize'
+import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
+import Helmet from 'react-helmet'
+import {Button} from 'react-materialize'
+import styled from 'styled-components'
+import {colors, layout} from '../../utils/styles'
 
-export default class HomePage extends React.PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+const HomeWrapper = styled.div`
+  ${layout.verticalCenter}
+  ${layout.col}
+  justify-content: space-around;
+  background-color: ${colors.lightGray};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`
+const PlacedButton = styled.div`
+  ${layout.center}
+  width: 180px;
+  height: 180px;
+  line-height: 25px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  border: 10px solid ${colors.gray}
+  background: ${colors.mediumGray};
+  color: ${colors.dark}
+  text-align: center;
+`
+
+
+class HomePage extends React.PureComponent {
+
+  static propTypes = {
+    bookSession: PropTypes.func.isRequired
+  }
+  
   render() {
     return (
-      <div>
-        <Button waves='light'>button</Button>
-        <Button waves='light'>
-          button<Icon left>cloud</Icon>
+      <HomeWrapper>
+        <Helmet title='Home' />
+        <PlacedButton>
+          <span>Button placed in One-to-One Sessions</span>
+        </PlacedButton>
+        <Button onClick={this.props.bookSession}>
+          Book Session
         </Button>
-        <Button waves='light'>
-          button<Icon right>cloud</Icon>
-        </Button>
-      </div>
+      </HomeWrapper>
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    bookSession: () => dispatch(push('/selection'))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(HomePage)

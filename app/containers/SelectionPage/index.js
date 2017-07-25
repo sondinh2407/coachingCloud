@@ -15,12 +15,7 @@ export class SelectionPage extends React.PureComponent {
   render() {
     return (
       <div>
-        <Helmet
-          title='SelectionPage'
-          meta={[
-            {name: 'description', content: 'Description of SelectionPage'},
-          ]}
-        />
+        <Helmet title='Session Selection' />
       </div>
     )
   }
