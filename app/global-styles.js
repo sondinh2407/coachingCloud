@@ -1,4 +1,5 @@
 import {injectGlobal} from 'styled-components'
+import {colors} from './utils/styles'
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
@@ -17,7 +18,7 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
+    background-color: ${colors.ground};
     min-height: 100%;
     min-width: 100%;
   }

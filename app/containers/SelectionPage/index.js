@@ -7,16 +7,26 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 import {createStructuredSelector} from 'reselect'
 import makeSelectSelectionPage from './selectors'
+import Header from './components/Header'
+import SessionList from './components/SessionList'
+import {colors} from '../../utils/styles'
+
+const SelectionWrapper = styled.div`
+  background-color: ${colors.gray};
+`
 
 export class SelectionPage extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <SelectionWrapper>
         <Helmet title='Session Selection' />
-      </div>
+        <Header />
+        <SessionList />
+      </SelectionWrapper>
     )
   }
 }
