@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
+import format from 'date-fns/format'
 import {colors} from '../../../../utils/styles'
 
 const ADayWrapper = styled.div`
@@ -9,7 +9,7 @@ const ADayWrapper = styled.div`
 const ADay = ({info: {day}}) =>
   <ADayWrapper>
     <span>{day}</span>
-    <span>{moment(day).format('dddd')}</span>
+    <span>{format(day, 'dddd')}</span>
   </ADayWrapper>
 
 ADay.propTypes = {
