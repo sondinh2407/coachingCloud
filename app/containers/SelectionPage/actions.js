@@ -4,10 +4,7 @@
  *
  */
 
-import {DEFAULT_ACTION} from './constants'
+import {createAction} from 'utils/actionHelpers'
+import {SELECT_SESSION_ACTION} from './constants'
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  }
-}
+export const selectSessionAction = (payload) => createAction(SELECT_SESSION_ACTION, payload)

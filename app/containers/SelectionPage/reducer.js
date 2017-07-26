@@ -4,18 +4,14 @@
  *
  */
 
-import {fromJS} from 'immutable'
-import {DEFAULT_ACTION} from './constants'
+import {combineReducers} from 'redux-immutable'
 
-const initialState = fromJS({})
+import {sessions, selectSession} from './components/SessionList/reducer'
+const selection = combineReducers({
+  selectSession,
+})
 
-function selectionPageReducer(state = initialState, action) {
-  switch (action.type) {
-    case DEFAULT_ACTION:
-      return state
-    default:
-      return state
-  }
-}
-
-export default selectionPageReducer
+export default combineReducers({
+  sessions,
+  selection
+})

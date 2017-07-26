@@ -13,8 +13,7 @@ const selectSelectionPageDomain = () => state => state.get('selectionPage')
  * Default selector used by SelectionPage
  */
 
-const makeSelectSelectionPage = () =>
-  createSelector(selectSelectionPageDomain(), substate => substate.toJS())
+const makeSelectSessions = () =>
+  createSelector(selectSelectionPageDomain(), substate => substate.get('sessions').get('data').toJS())
 
-export default makeSelectSelectionPage
-export {selectSelectionPageDomain}
+export {makeSelectSessions}

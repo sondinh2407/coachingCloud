@@ -1,38 +1,41 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import styled from 'styled-components'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {makeSelectSessions} from '../../selectors'
+import {selectSessionAction} from '../../actions'
 import ASession from './ASession'
 
 const SessionListWrapper = styled.div``
-function onClick(id) {
-  console.log('======', id)
-}
-const sessions = [
-  {
-    id: 1,
-    title: 'Check in Call',
-    description: '15 minutes Zoom Call',
-    price: '$250'
-  },
-  {
-    id: 2,
-    title: 'Chemistry Session',
-    description: '15 minutes Zoom Call'
-  },
-  {
-    id: 3,
-    title: 'Check in Call',
-    description: '15 minutes Zoom Call',
-    price: '$250'
-  },
-  {
-    id: 4,
-    title: 'Chemistry Session',
-    description: '15 minutes Zoom Call'
-  }
-]
-const SessionList = () =>
-  <SessionListWrapper>
-    {sessions.map((s, i) => <ASession key={s.id} info={s} onClick={onClick} topBorder={!!i} />)}
-  </SessionListWrapper>
 
-export default SessionList
+
+const SessionList = ({sessions, selectSession}) => {
+  function onClick(id) {
+    selectSession({
+      id
+    })
+  }
+  return (
+    <SessionListWrapper>
+      {sessions.map((s, i) => <ASession key={s.id} info={s} onClick={onClick} topBorder={!!i} />)}
+    </SessionListWrapper>
+  )
+}
+
+
+SessionList.propTypes = {
+  sessions: PropTypes.array.isRequired,
+  selectSession: PropTypes.func.isRequired
+}
+
+const mapStateToProps = createStructuredSelector({
+  sessions: makeSelectSessions(),
+})
+
+function mapDispatchToProps(dispatch) {
+  return {
+    selectSession: payload => dispatch(selectSessionAction({payload})),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SessionList)
+

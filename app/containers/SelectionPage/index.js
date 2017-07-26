@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import {createStructuredSelector} from 'reselect'
-import makeSelectSelectionPage from './selectors'
 import Header from './components/Header'
 import SessionList from './components/SessionList'
 import {colors} from '../../utils/styles'
@@ -36,7 +35,6 @@ SelectionPage.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  SelectionPage: makeSelectSelectionPage(),
 })
 
 function mapDispatchToProps(dispatch) {
