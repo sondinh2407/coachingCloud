@@ -14,6 +14,12 @@ const selectSelectionPageDomain = () => state => state.get('selectionPage')
  */
 
 const makeSelectSessions = () =>
-  createSelector(selectSelectionPageDomain(), substate => substate.get('sessions').get('data').toJS())
+  createSelector(selectSelectionPageDomain(), substate => substate.get('sessions').toJS())
 
-export {makeSelectSessions}
+const makeSelectDays = () =>
+  createSelector(selectSelectionPageDomain(), substate => substate.get('days').toJS())
+
+const makeSelectCurrentStep = () =>
+  createSelector(selectSelectionPageDomain(), substate => substate.get('currentStep'))
+
+export {makeSelectSessions, makeSelectDays, makeSelectCurrentStep}

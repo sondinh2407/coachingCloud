@@ -6,8 +6,8 @@
 
 import {fromJS} from 'immutable'
 import {SELECT_SESSION_ACTION} from '../../constants'
-const sessionInitial = fromJS({
-  data: [
+const sessionInitial = fromJS(
+  [
     {
       id: 1,
       title: 'Check in Call',
@@ -75,7 +75,7 @@ const sessionInitial = fromJS({
       description: '15 minutes Zoom Call'
     }
   ]
-})
+)
 
 export function sessions(state = sessionInitial, action) {
   switch (action.type) {
