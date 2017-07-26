@@ -1,41 +1,28 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
-import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {makeSelectSessions} from '../../selectors'
-import {selectSessionAction} from '../../actions'
+import {SESSION_SELECTIONS} from '../../../../utils/constants'
+import {session} from '../../propsValidation'
 import ASession from './ASession'
 
 const SessionListWrapper = styled.div``
 
 
 const SessionList = ({sessions, selectSession}) => {
-  function onClick(id) {
+  function _onClick(sessionId) {
     selectSession({
-      id
+      selectedStep: SESSION_SELECTIONS.SELECT_DAY,
+      sessionId
     })
   }
   return (
     <SessionListWrapper>
-      {sessions.map((s, i) => <ASession key={s.id} info={s} onClick={onClick} topBorder={!!i} />)}
+      {sessions.map((s, i) => <ASession key={s.id} info={s} onClick={_onClick} topBorder={!!i} />)}
     </SessionListWrapper>
   )
 }
 
-
 SessionList.propTypes = {
-  sessions: PropTypes.array.isRequired,
+  sessions: PropTypes.arrayOf(PropTypes.shape(session)).isRequired,
   selectSession: PropTypes.func.isRequired
 }
-
-const mapStateToProps = createStructuredSelector({
-  sessions: makeSelectSessions(),
-})
-
-function mapDispatchToProps(dispatch) {
-  return {
-    selectSession: payload => dispatch(selectSessionAction({payload})),
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SessionList)
-
+export default SessionList

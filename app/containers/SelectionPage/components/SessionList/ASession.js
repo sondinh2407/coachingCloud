@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
 import {colors, spacing, layout, typeface} from '../../../../utils/styles'
+import {session} from '../../propsValidation'
 
 const Title = styled.div`
   color: ${colors.black};
@@ -34,15 +35,9 @@ const ASession = ({info: {id, title, description, price = ''}, topBorder, onClic
     </ASessionWrapper>
   )
 }
-  
 
 ASession.propTypes = {
-  info: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string,
-    description: PropTypes.string.isRequired,
-    price: PropTypes.string
-  }),
+  info: PropTypes.shape(session).isRequired,
   topBorder: PropTypes.bool,
   onClick: PropTypes.func.isRequired
 }

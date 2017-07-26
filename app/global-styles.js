@@ -1,5 +1,5 @@
 import {injectGlobal} from 'styled-components'
-import {colors} from './utils/styles'
+import {colors, typeface} from './utils/styles'
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
@@ -7,6 +7,7 @@ injectGlobal`
   body {
     height: 100%;
     width: 100%;
+    font-size: ${typeface.size.normal}
   }
 
   body {

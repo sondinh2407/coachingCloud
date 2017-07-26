@@ -5,6 +5,10 @@
  */
 
 import {createAction} from 'utils/actionHelpers'
-import {SELECT_SESSION_ACTION} from './constants'
+import {CHANGE_STEP, RESET_STEP} from './constants'
 
-export const selectSessionAction = (payload) => createAction(SELECT_SESSION_ACTION, payload)
+export const selectSession = (payload) => createAction(CHANGE_STEP, payload)
+
+export const closeSelection = () => createAction(RESET_STEP)
+
+export const goBackStep = (payload) => createAction(CHANGE_STEP, payload)

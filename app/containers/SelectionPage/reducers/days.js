@@ -1,11 +1,5 @@
-/*
- *
- * SelectionPage reducer
- *
- */
-
 import {fromJS} from 'immutable'
-const sessionInitial = fromJS(
+const daysInitial = fromJS(
   [
     {
       id: 1,
@@ -52,14 +46,7 @@ const sessionInitial = fromJS(
   ]
 )
 
-export function days(state = sessionInitial, action) {
-  switch (action.type) {
-    default:
-      return state
-  }
-}
-
-export function selectDay(state = fromJS({}), action) {
+export default function days(state = daysInitial, action) {
   switch (action.type) {
     default:
       return state

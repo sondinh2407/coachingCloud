@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
-import {createStructuredSelector} from 'reselect'
-import {connect} from 'react-redux'
-import {makeSelectDays} from '../../selectors'
+import * as propsValidation from '../../propsValidation'
 import ADay from './ADay'
 
 const DayListWrapper = styled.div`
@@ -13,11 +11,7 @@ const DayList = ({days}) =>
   </DayListWrapper>
 
 DayList.propTypes = {
-  days: PropTypes.array.isRequired,
+  days: PropTypes.arrayOf(PropTypes.shape(propsValidation.day)).isRequired,
 }
 
-const mapStateToProps = createStructuredSelector({
-  days: makeSelectDays(),
-})
-export default connect(mapStateToProps)(DayList)
-
+export default DayList

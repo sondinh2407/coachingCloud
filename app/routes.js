@@ -38,7 +38,7 @@ export default function createRoutes(store) {
       name: 'selectionPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/SelectionPage/reducer'),
+          import('containers/SelectionPage/reducers'),
           import('containers/SelectionPage/sagas'),
           import('containers/SelectionPage'),
         ]);
