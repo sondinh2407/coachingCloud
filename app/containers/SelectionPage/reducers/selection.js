@@ -1,9 +1,8 @@
 import {fromJS} from 'immutable'
 import {SESSION_SELECTIONS} from 'utils/constants'
 import {CHANGE_STEP, RESET_STEP} from '../constants'
-
 const initialSelection = fromJS({
-  selectedStep: SESSION_SELECTIONS.SELECT_SESSION
+  selectedStep: SESSION_SELECTIONS.SELECT_SESSION,
 })
 export default function selection(state = initialSelection, action) {
   switch (action.type) {

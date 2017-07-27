@@ -7,7 +7,18 @@ export const session = {
   price: PropTypes.string
 }
 
-export const day = {}
+export const week = {
+  priv: PropTypes.string,
+  next: PropTypes.string,
+  days: PropTypes.arrayOf(PropTypes.shape(day)).isRequired
+}
+
+export const day = {
+  id: PropTypes.string,
+  value: PropTypes.string,
+  am: PropTypes.bool,
+  pm: PropTypes.bool,
+}
 
 export const selection = {
   sessionId: PropTypes.number,
