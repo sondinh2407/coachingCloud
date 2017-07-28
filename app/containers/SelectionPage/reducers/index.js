@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux-immutable'
 import sessions from './sessions'
-import week from './week'
+import days from './days'
 import selection from './selection'
+import times from './times'
 
 export default combineReducers({
   sessions,
-  week,
+  days,
+  times,
   selection
 })

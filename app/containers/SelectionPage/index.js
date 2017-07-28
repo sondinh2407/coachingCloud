@@ -7,7 +7,7 @@ import {createStructuredSelector} from 'reselect'
 import {SESSION_SELECTIONS} from 'utils/constants'
 import * as actions from './actions'
 import * as propsValidation from './propsValidation'
-import {makeSelectSelection, makeSelectWeek, makeSelectSessions} from './selectors'
+import {makeSelectSelection, makeSelectDays, makeSelectSessions, makeSelectTimes} from './selectors'
 import Header from './components/Header'
 import SessionList from './components/SessionList'
 import TimeList from './components/TimeList'
@@ -21,15 +21,15 @@ const SelectionWrapper = styled.div`
 export class SelectionPage extends React.PureComponent {
 
   _generateSelectedStep = () => {
-    const {sessions, week, selection, changeStep, goNextWeek} = this.props
+    const {sessions, days, selection, selection: {day = {}, currentWeek = 0, is12h = true}, changeStep, goNextWeek, times} = this.props
     
     switch (selection.selectedStep) {
       case SESSION_SELECTIONS.SELECT_SESSION:
         return <SessionList sessions={sessions} selectSession={changeStep} />
       case SESSION_SELECTIONS.SELECT_DAY:
-        return <DayList week={week} goNextWeek={goNextWeek} selectDay={changeStep} />
+        return <DayList days={days} goNextWeek={goNextWeek} currentWeek={currentWeek} changeStep={changeStep} />
       case SESSION_SELECTIONS.SELECT_TIME:
-        return <TimeList />
+        return <TimeList times={times} changeStep={changeStep} is12h={is12h} daySelection={day} />
       case SESSION_SELECTIONS.CONFIRM_BOOK:
         return <span>Confirm book</span>
       default:
@@ -52,18 +52,20 @@ export class SelectionPage extends React.PureComponent {
 
 SelectionPage.propTypes = {
   sessions: PropTypes.arrayOf(PropTypes.shape(propsValidation.session)).isRequired,
-  week: PropTypes.shape(propsValidation.week).isRequired,
+  days: PropTypes.arrayOf(PropTypes.shape(propsValidation.day)).isRequired,
   selection: PropTypes.shape(propsValidation.selection).isRequired,
   changeStep: PropTypes.func.isRequired,
   closeSelection: PropTypes.func.isRequired,
   goBackStep: PropTypes.func.isRequired,
-  goNextWeek: PropTypes.func.isRequired
+  goNextWeek: PropTypes.func.isRequired,
+  times: PropTypes.object
 }
 
 const mapStateToProps = createStructuredSelector({
   sessions: makeSelectSessions(),
-  week: makeSelectWeek(),
-  selection: makeSelectSelection()
+  days: makeSelectDays(),
+  selection: makeSelectSelection(),
+  times: makeSelectTimes(),
 })
 
 function mapDispatchToProps(dispatch) {

@@ -15,14 +15,14 @@ export const week = {
 
 export const day = {
   id: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.date,
   am: PropTypes.bool,
   pm: PropTypes.bool,
 }
 
 export const selection = {
   sessionId: PropTypes.number,
-  day: PropTypes.number,
+  day: PropTypes.shape(day),
   time: PropTypes.number,
   timezone: PropTypes.string,
   selectedStep: PropTypes.number.isRequired

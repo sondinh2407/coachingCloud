@@ -5,33 +5,37 @@ import ADay from './ADay'
 import {SESSION_SELECTIONS} from '../../../../utils/constants'
 const DayListWrapper = styled.div`
 `
-const DayList = ({week: {days, next}, goNextWeek, selectDay}) => {
+const DayList = ({days, currentWeek, changeStep}) => {
+  const _onNextClick = () => {
+    changeStep({
+      currentWeek: currentWeek + 1
+    })
+  }
   const _onBackClick = () => {
-    if (!next) {
-      return
-    }
-    goNextWeek({
-      next
+    changeStep({
+      currentWeek: currentWeek - 1
     })
   }
   function _onDayClick(day) {
-    selectDay({
+    changeStep({
       selectedStep: SESSION_SELECTIONS.SELECT_TIME,
       day
     })
   }
+  const data = days.slice(currentWeek * 7, (currentWeek + 1) * 7)
   return (
     <DayListWrapper>
-      {days.map((day, i) => <ADay key={day.id} onClick={_onDayClick} info={day} topBorder={!!i} />)}
-      <button onClick={_onBackClick}>Next</button>
+      {data.map((day, i) => <ADay key={day.value} onClick={_onDayClick} info={day} topBorder={!!i} />)}
+      <button hidden={currentWeek === 4} onClick={_onNextClick}>Next</button>
+      <button hidden={currentWeek === 0} onClick={_onBackClick}>Back</button>
     </DayListWrapper>
   )
 }
 
 DayList.propTypes = {
-  week: PropTypes.shape(propsValidation.week).isRequired,
-  selectDay: PropTypes.func.isRequired,
-  goNextWeek: PropTypes.func.isRequired
+  days: PropTypes.arrayOf(PropTypes.shape(propsValidation.day)).isRequired,
+  changeStep: PropTypes.func.isRequired,
+  currentWeek: PropTypes.number.isRequired
 }
 
 export default DayList

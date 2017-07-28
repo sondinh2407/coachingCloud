@@ -16,10 +16,13 @@ const selectSelectionPageDomain = () => state => state.get('selectionPage')
 const makeSelectSessions = () =>
   createSelector(selectSelectionPageDomain(), substate => substate.get('sessions').toJS())
 
-const makeSelectWeek = () =>
-  createSelector(selectSelectionPageDomain(), substate => substate.get('week').toJS())
+const makeSelectTimes = () =>
+  createSelector(selectSelectionPageDomain(), substate => substate.get('times').toJS())
+
+const makeSelectDays = () =>
+  createSelector(selectSelectionPageDomain(), substate => substate.get('days').toJS())
 
 const makeSelectSelection = () =>
   createSelector(selectSelectionPageDomain(), substate => substate.get('selection').toJS())
 
-export {makeSelectSessions, makeSelectWeek, makeSelectSelection}
+export {makeSelectSessions, makeSelectDays, makeSelectSelection, makeSelectTimes}

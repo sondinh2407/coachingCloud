@@ -14,3 +14,4 @@ export const closeSelection = () => createAction(RESET_STEP)
 export const goBackStep = (payload) => createAction(CHANGE_STEP, payload)
 
 export const goNextWeek = (payload) => createAction(CHANGE_WEEK, payload)
+
