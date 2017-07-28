@@ -1,15 +1,18 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
 import format from 'date-fns/format'
-import {colors} from '../../../../utils/styles'
-import {day} from '../../propsValidation'
+import {colors, spacing, layout} from '../../../../utils/styles'
 
-const ATimeWrapper = styled.div`
-  background-color: ${colors.white};
-`
-const ATime = ({value, is12h, onClick}) => {
+const ATime = ({value, is12h, onClick, topBorder}) => {
   const strFormat = is12h ? 'h:mm a' : 'H:mm'
   const _onClick = () => onClick(value)
+  const ATimeWrapper = styled.div`
+    ${layout.center}
+    ${topBorder && `border-top: 1px solid ${colors.mediumGray}`}
+    background-color: ${colors.white};
+    padding: ${spacing.paddingItem}px;
+  `
+
   return (
     <ATimeWrapper onClick={_onClick}>
       {format(value, strFormat)}
@@ -17,8 +20,9 @@ const ATime = ({value, is12h, onClick}) => {
   )
 }
 ATime.propTypes = {
-  value: PropTypes.shape(day).isRequired,
+  value: PropTypes.instanceOf(Date).isRequired,
   is12h: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  topBorder: PropTypes.bool
 }
 export default ATime

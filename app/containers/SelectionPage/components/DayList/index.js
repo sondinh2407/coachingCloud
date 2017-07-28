@@ -1,9 +1,39 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
+import {Icon, Button} from 'react-materialize'
 import * as propsValidation from '../../propsValidation'
 import ADay from './ADay'
 import {SESSION_SELECTIONS} from '../../../../utils/constants'
+import {layout, colors} from '../../../../utils/styles'
+
+const footerHeight = 36
 const DayListWrapper = styled.div`
+  margin-bottom: ${footerHeight}px;
+`
+const MoveWrapper = styled.div`
+  ${layout.flex}
+  justify-content: space-between;
+  background-color: ${colors.gray};
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+`
+const NavigateButton = `
+  height: ${footerHeight}px;
+  padding: 0;
+  &:hover {
+    background-color: transparent;
+  }
+  i {
+    margin: 0;
+  }
+`
+const Before = styled(Button)`
+  ${NavigateButton}
+`
+const Next = styled(Button)`
+  ${NavigateButton}
+  margin-left: auto;
 `
 const DayList = ({days, currentWeek, changeStep}) => {
   const _onNextClick = () => {
@@ -26,8 +56,18 @@ const DayList = ({days, currentWeek, changeStep}) => {
   return (
     <DayListWrapper>
       {data.map((day, i) => <ADay key={day.value} onClick={_onDayClick} info={day} topBorder={!!i} />)}
-      <button hidden={currentWeek === 4} onClick={_onNextClick}>Next</button>
-      <button hidden={currentWeek === 0} onClick={_onBackClick}>Back</button>
+      <MoveWrapper>
+        {(currentWeek > 0) &&
+          <Before flat onClick={_onBackClick}>
+            <Icon left>navigate_before</Icon>Before
+          </Before>
+        }
+        {(currentWeek < 4) &&
+          <Next flat onClick={_onNextClick}>
+            Next<Icon right>navigate_next</Icon>
+          </Next>
+        }
+      </MoveWrapper>
     </DayListWrapper>
   )
 }

@@ -1,3 +1,4 @@
 export default {
-  paddingItem: 15
+  paddingItem: 15,
+  space: 15
 }

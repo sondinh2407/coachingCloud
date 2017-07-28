@@ -7,17 +7,10 @@ export const session = {
   price: PropTypes.string
 }
 
-export const week = {
-  priv: PropTypes.string,
-  next: PropTypes.string,
-  days: PropTypes.arrayOf(PropTypes.shape(day)).isRequired
-}
-
 export const day = {
-  id: PropTypes.string,
-  value: PropTypes.date,
-  am: PropTypes.bool,
-  pm: PropTypes.bool,
+  value: PropTypes.instanceOf(Date).isRequired,
+  am: PropTypes.bool.isRequired,
+  pm: PropTypes.bool.isRequired,
 }
 
 export const selection = {

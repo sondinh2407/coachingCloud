@@ -8,7 +8,7 @@ const generateTimes = () => {
   for (let i = 0; i < 9; i += 1) {
     morning.push(addMinutes(startMorningTime, i * 15))
   }
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 20; i += 1) {
     noon.push(addMinutes(startNoonTime, i * 15))
   }
   return {
