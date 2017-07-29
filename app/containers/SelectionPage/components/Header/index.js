@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import styled from 'styled-components'
-import {Icon} from 'react-materialize'
+import {Icon, Row, Input} from 'react-materialize'
 import {selection} from '../../propsValidation'
 import {colors, typeface} from '../../../../utils/styles'
 import {SESSION_SELECTIONS} from '../../../../utils/constants'
@@ -36,6 +36,13 @@ const Header = ({info: {selectedStep}, closeSelection, goBackStep}) => {
       {selectedStep > SESSION_SELECTIONS.SELECT_SESSION &&
         <BackButton onClick={_goBackStep}><Icon>arrow_back</Icon></BackButton>}
       <CloseButton onClick={closeSelection}><Icon>close</Icon></CloseButton>
+      <Row>
+        <Input s={12} type='select' label='Materialize Select' defaultValue='2'>
+          <option value='1'>Option 1</option>
+          <option value='2'>Option 2</option>
+          <option value='3'>Option 3</option>
+        </Input>
+      </Row>
     </HeaderWrapper>
   )
 }
