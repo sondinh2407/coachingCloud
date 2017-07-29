@@ -10,8 +10,8 @@ injectGlobal`
     font-size: ${typeface.size.normal}
   }
 
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  body, label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   }
 
   body.fontLoaded {

@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
+import findIndex from 'lodash/findIndex'
 import Helmet from 'react-helmet'
 import {Button} from 'react-materialize'
 import styled from 'styled-components'
@@ -20,13 +21,7 @@ import TimeList from './components/TimeList'
 import DayList from './components/DayList'
 import {colors, spacing, layout} from '../../utils/styles'
 
-const SelectionWrapper = styled.div`
-  background-color: ${colors.gray};
-`
-const ConfirmWrapper = styled.div`
-  ${layout.center}
-  padding-top: 30px;
-`
+const ConfirmWrapper = styled.div`${layout.center} padding-top: 20px;`
 const Cancel = styled(Button)`
   background-color: ${colors.white};
   color: ${colors.black};
@@ -37,52 +32,75 @@ const Book = styled(Button)`
   background-color: ${colors.secondary};
   padding: 0 ${spacing.paddingItem}px;
 `
+const headerHeight = [46, 140, 178, 162]
 
 export class SelectionPage extends React.PureComponent {
   _generateSelectedStep = () => {
     const {
       sessions,
       days,
-      selection,
-      selection: {day = {}, currentWeek = 0, is12h = true},
-      changeStep,
-      goNextWeek,
-      times
+      selection: {
+        selectedStep = SESSION_SELECTIONS.SELECT_SESSION,
+        day = {},
+        currentWeek = 0,
+        is12h = true
+      },
+      updateSelection,
+      times,
+      closeSelection
     } = this.props
 
-    switch (selection.selectedStep) {
+    switch (selectedStep) {
       case SESSION_SELECTIONS.SELECT_SESSION:
-        return <SessionList sessions={sessions} selectSession={changeStep} />
+        return <SessionList sessions={sessions} selectSession={updateSelection} />
       case SESSION_SELECTIONS.SELECT_DAY:
+        return <DayList days={days} currentWeek={currentWeek} updateSelection={updateSelection} />
+      case SESSION_SELECTIONS.SELECT_TIME:
         return (
-          <DayList
-            days={days}
-            goNextWeek={goNextWeek}
-            currentWeek={currentWeek}
-            changeStep={changeStep}
+          <TimeList
+            times={times}
+            updateSelection={updateSelection}
+            is12h={is12h}
+            daySelection={day}
           />
         )
-      case SESSION_SELECTIONS.SELECT_TIME:
-        return <TimeList times={times} changeStep={changeStep} is12h={is12h} daySelection={day} />
       case SESSION_SELECTIONS.CONFIRM_BOOK:
         return (
           <ConfirmWrapper>
-            <Cancel>Cancel</Cancel>
+            <Cancel onClick={closeSelection}>Cancel</Cancel>
             <Book>Book</Book>
           </ConfirmWrapper>
         )
       default:
-        return <SessionList sessions={sessions} selectSession={changeStep} />
+        return <SessionList sessions={sessions} selectSession={updateSelection} />
     }
   }
 
+  _getSelectedSession = () => {
+    const {selection: {sessionId}, sessions} = this.props
+    const index = findIndex(sessions, (s) => sessionId === s.id)
+
+    return sessions[index]
+  }
+
   render() {
-    const {selection, closeSelection, goBackStep} = this.props
+    const {selection, closeSelection, goBackStep, updateSelection} = this.props
+    const SelectionWrapper = styled.div`
+      background-color: ${colors.gray};
+      padding-top: ${headerHeight[selection.selectedStep]}px;
+    `
 
     return (
       <SelectionWrapper>
         <Helmet title='Session Selection' />
-        <Header info={selection} closeSelection={closeSelection} goBackStep={goBackStep} />
+        <Header
+          height={headerHeight[selection.selectedStep]}
+          info={selection}
+          closeSelection={closeSelection}
+          goBackStep={goBackStep}
+          updateSelection={updateSelection}
+          selectedSession={this._getSelectedSession()}
+        />
         {this._generateSelectedStep()}
       </SelectionWrapper>
     )
@@ -93,10 +111,9 @@ SelectionPage.propTypes = {
   sessions: PropTypes.arrayOf(PropTypes.shape(propsValidation.session)).isRequired,
   days: PropTypes.arrayOf(PropTypes.shape(propsValidation.day)).isRequired,
   selection: PropTypes.shape(propsValidation.selection).isRequired,
-  changeStep: PropTypes.func.isRequired,
+  updateSelection: PropTypes.func.isRequired,
   closeSelection: PropTypes.func.isRequired,
   goBackStep: PropTypes.func.isRequired,
-  goNextWeek: PropTypes.func.isRequired,
   times: PropTypes.object
 }
 
@@ -109,13 +126,12 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeStep: payload => dispatch(actions.changeStep({payload})),
-    goNextWeek: payload => dispatch(actions.goNextWeek({payload})),
+    updateSelection: payload => dispatch(actions.updateSelection({payload})),
     closeSelection: () => {
       dispatch(actions.closeSelection())
       dispatch(push('/'))
     },
-    goBackStep: payload => dispatch(actions.goBackStep({payload}))
+    goBackStep: payload => dispatch(actions.updateSelection({payload}))
   }
 }
 

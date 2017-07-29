@@ -35,19 +35,19 @@ const Next = styled(Button)`
   ${NavigateButton}
   margin-left: auto;
 `
-const DayList = ({days, currentWeek, changeStep}) => {
+const DayList = ({days, currentWeek, updateSelection}) => {
   const _onNextClick = () => {
-    changeStep({
+    updateSelection({
       currentWeek: currentWeek + 1
     })
   }
   const _onBackClick = () => {
-    changeStep({
+    updateSelection({
       currentWeek: currentWeek - 1
     })
   }
   function _onDayClick(day) {
-    changeStep({
+    updateSelection({
       selectedStep: SESSION_SELECTIONS.SELECT_TIME,
       day
     })
@@ -74,7 +74,7 @@ const DayList = ({days, currentWeek, changeStep}) => {
 
 DayList.propTypes = {
   days: PropTypes.arrayOf(PropTypes.shape(propsValidation.day)).isRequired,
-  changeStep: PropTypes.func.isRequired,
+  updateSelection: PropTypes.func.isRequired,
   currentWeek: PropTypes.number.isRequired
 }
 

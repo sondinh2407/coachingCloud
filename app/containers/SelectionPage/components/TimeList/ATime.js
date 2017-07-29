@@ -19,10 +19,12 @@ const ATime = ({value, is12h, onClick, topBorder}) => {
     </ATimeWrapper>
   )
 }
+
 ATime.propTypes = {
-  value: PropTypes.instanceOf(Date).isRequired,
+  value: PropTypes.number.isRequired,
   is12h: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   topBorder: PropTypes.bool
 }
+
 export default ATime

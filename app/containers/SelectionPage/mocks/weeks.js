@@ -18,11 +18,11 @@ function generateDaysOfWeek(startDayOfWeek) {
   const data = []
   for (let j = 0; j < 7; j += 1) {
     const value = addDays(startDayOfWeek, j)
-    let am = Math.random() > 0.5
-    let pm = Math.random() < 0.5
-    if (isBefore(value, new Date() && !isToday(value))) {
-      am = false
-      pm = false
+    let am = false
+    let pm = false
+    if (!isBefore(value, new Date()) || isToday(value)) {
+      am = Math.random() > 0.5
+      pm = Math.random() < 0.5
     }
     data.push({
       value,

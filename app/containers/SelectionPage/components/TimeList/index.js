@@ -8,12 +8,7 @@ import {SESSION_SELECTIONS} from '../../../../utils/constants'
 import {day} from '../../propsValidation'
 
 const TimeListWrapper = styled.div``
-const TimeList = ({daySelection: {am, pm, value}, times, changeStep, is12h}) => {
-  const onChangeTypeClick = () => {
-    changeStep({
-      is12h: !is12h
-    })
-  }
+const TimeList = ({daySelection: {am, pm, value}, times, updateSelection, is12h}) => {
   let data = []
   if (am) {
     data = data.concat(times.morning)
@@ -25,10 +20,10 @@ const TimeList = ({daySelection: {am, pm, value}, times, changeStep, is12h}) => 
     const hours = getHours(time)
     const minutes = getMinutes(time)
     const newDay = setMinutes(value, (hours * 60) + minutes)
-
-    changeStep({
+    
+    updateSelection({
       selectedStep: SESSION_SELECTIONS.CONFIRM_BOOK,
-      selectedDay: newDay
+      dateTime: newDay.getTime()
     })
   }
   return (
@@ -36,7 +31,6 @@ const TimeList = ({daySelection: {am, pm, value}, times, changeStep, is12h}) => 
       {data.map((t, i) =>
         <ATime onClick={_onTimeClick} key={t} value={t} is12h={is12h} topBorder={!!i} />
       )}
-      <button onClick={onChangeTypeClick}>abc</button>
     </TimeListWrapper>
   )
 }
@@ -44,6 +38,6 @@ TimeList.propTypes = {
   daySelection: PropTypes.shape(day).isRequired,
   times: PropTypes.object,
   is12h: PropTypes.bool.isRequired,
-  changeStep: PropTypes.func.isRequired
+  updateSelection: PropTypes.func.isRequired
 }
 export default TimeList

@@ -5,13 +5,11 @@
  */
 
 import {createAction} from 'utils/actionHelpers'
-import {CHANGE_STEP, RESET_STEP, CHANGE_WEEK} from './constants'
+import {UPDATE_SELECTION, RESET_STEP} from './constants'
 
-export const changeStep = (payload) => createAction(CHANGE_STEP, payload)
+export const updateSelection = (payload) => createAction(UPDATE_SELECTION, payload)
 
 export const closeSelection = () => createAction(RESET_STEP)
 
-export const goBackStep = (payload) => createAction(CHANGE_STEP, payload)
-
-export const goNextWeek = (payload) => createAction(CHANGE_WEEK, payload)
+export const goBackStep = (payload) => createAction(UPDATE_SELECTION, payload)
 
